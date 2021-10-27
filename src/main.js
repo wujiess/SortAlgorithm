@@ -1,48 +1,39 @@
 let quickSort = (array) => {
-    if (array.length === 1) {
-        array[0].pivot = true;
-    }
     if (array.length <= 1) {
         return array;
     }
     const pivotIndex = Math.floor(array.length / 2);
     var pivot = array.splice(pivotIndex, 1)[0];
-    pivot.pivot = true;
 
     const left = [];
     const right = [];
     for (let i = 0; i < array.length; i++) {
-        if (array[i].value < pivot.value) {
+        if (array[i] < pivot) {
             left.push(array[i])
         } else {
             right.push(array[i]);
         }
     }
-    displaySortArray(left.concat([pivot], right));
     return quickSort(left).concat([pivot], quickSort(right));
 }
 
-function QuickSortItem(value) {
-    this.value = value;
-    this.pivot = false;
+let mergeSort = (array) => {
+    return array;
 }
 
-function displaySortArray(array) {
+let displaySortArray = (array, div, message) => {
+    div.innerHTML = '';
     const ul = document.createElement('ul');
     ul.className = 'itemsUl';
+    const messageLi = document.createElement('li');
+    messageLi.innerHTML = message;
+    ul.append(messageLi);
     for (let i = 0; i < array.length; i++) {
         const li = document.createElement('li');
-        li.style.color = array[i].pivot ? '#4e6ef2' : '#000';
-        li.innerHTML = array[i].value;
+        li.innerHTML = array[i];
         ul.append(li);
     }
-    arrayDiv.append(ul);
-}
-
-let swap = (array, i, j) => {
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    div.append(ul);
 }
 
 let generateArray = (count, maxValue) => {
@@ -53,20 +44,27 @@ let generateArray = (count, maxValue) => {
     return arr;
 }
 
-let generateQuickSortArray = () => {
-    let arr = generateArray(10, 1000);
-    let array = [];
-    arr.forEach(p => {
-        array.push(new QuickSortItem(p));
-    });
-    return array;
+let arr;
+
+let initArray = () => {
+    arr = generateArray(10, 1000);
+    displaySortArray(arr, arrayDiv, '初始数组');
 }
 
-let quickSortArray = generateQuickSortArray();
+initArray();
 
-displaySortArray(quickSortArray);
+btnInitArray.onclick = () => {
+    initArray();
+}
 
 btnQuickSort.onclick = () => {
-    let result = quickSort(quickSortArray);
-    displaySortArray(result);
+    const array = arr.slice();
+    let result = quickSort(array);
+    displaySortArray(result, sortResult, '快速排序');
+}
+
+btnMergeSort.onclick = () => {
+    const array = arr.slice();
+    let result = mergeSort(array);
+    displaySortArray(result, sortResult, '归并排序');
 }

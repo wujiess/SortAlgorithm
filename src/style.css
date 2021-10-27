@@ -18,6 +18,10 @@ button {
     cursor: pointer;
 }
 
+.buttons {
+    padding: 8px;
+}
+
 .itemsUl {
     display: flex;
 }

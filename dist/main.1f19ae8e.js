@@ -119,55 +119,45 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"main.js":[function(require,module,exports) {
 var quickSort = function quickSort(array) {
-  if (array.length === 1) {
-    array[0].pivot = true;
-  }
-
   if (array.length <= 1) {
     return array;
   }
 
   var pivotIndex = Math.floor(array.length / 2);
   var pivot = array.splice(pivotIndex, 1)[0];
-  pivot.pivot = true;
   var left = [];
   var right = [];
 
   for (var i = 0; i < array.length; i++) {
-    if (array[i].value < pivot.value) {
+    if (array[i] < pivot) {
       left.push(array[i]);
     } else {
       right.push(array[i]);
     }
   }
 
-  displaySortArray(left.concat([pivot], right));
   return quickSort(left).concat([pivot], quickSort(right));
 };
 
-function QuickSortItem(value) {
-  this.value = value;
-  this.pivot = false;
-}
+var mergeSort = function mergeSort(array) {
+  return array;
+};
 
-function displaySortArray(array) {
+var displaySortArray = function displaySortArray(array, div, message) {
+  div.innerHTML = '';
   var ul = document.createElement('ul');
   ul.className = 'itemsUl';
+  var messageLi = document.createElement('li');
+  messageLi.innerHTML = message;
+  ul.append(messageLi);
 
   for (var i = 0; i < array.length; i++) {
     var li = document.createElement('li');
-    li.style.color = array[i].pivot ? '#4e6ef2' : '#000';
-    li.innerHTML = array[i].value;
+    li.innerHTML = array[i];
     ul.append(li);
   }
 
-  arrayDiv.append(ul);
-}
-
-var swap = function swap(array, i, j) {
-  var temp = array[i];
-  array[i] = array[j];
-  array[j] = temp;
+  div.append(ul);
 };
 
 var generateArray = function generateArray(count, maxValue) {
@@ -180,21 +170,29 @@ var generateArray = function generateArray(count, maxValue) {
   return arr;
 };
 
-var generateQuickSortArray = function generateQuickSortArray() {
-  var arr = generateArray(10, 1000);
-  var array = [];
-  arr.forEach(function (p) {
-    array.push(new QuickSortItem(p));
-  });
-  return array;
+var arr;
+
+var initArray = function initArray() {
+  arr = generateArray(10, 1000);
+  displaySortArray(arr, arrayDiv, '初始数组');
 };
 
-var quickSortArray = generateQuickSortArray();
-displaySortArray(quickSortArray);
+initArray();
+
+btnInitArray.onclick = function () {
+  initArray();
+};
 
 btnQuickSort.onclick = function () {
-  var result = quickSort(quickSortArray);
-  displaySortArray(result);
+  var array = arr.slice();
+  var result = quickSort(array);
+  displaySortArray(result, sortResult, '快速排序');
+};
+
+btnMergeSort.onclick = function () {
+  var array = arr.slice();
+  var result = mergeSort(array);
+  displaySortArray(result, sortResult, '归并排序');
 };
 },{}],"C:/Users/yanming/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -224,7 +222,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52297" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49574" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
