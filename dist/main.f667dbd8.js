@@ -104,6 +104,29 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   // Override the current require with this new one
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+//选择排序
+var selectionSort = function selectionSort(array) {
+    for (var i = 0; i < arr.length; i++) {
+        var minIndex = i;
+        for (var j = i + 1; j < arr.length; j++) {
+            if (array[j] < array[minIndex]) {
+                minIndex = j;
+            }
+        }
+        if (minIndex !== i) {
+            swap(array, i, minIndex);
+        }
+    }
+    return array;
+};
+
+var swap = function swap(array, indexA, indexB) {
+    var temp = array[indexA];
+    array[indexA] = array[indexB];
+    array[indexB] = temp;
+};
+
+//快速排序
 var quickSort = function quickSort(array) {
     if (array.length <= 1) {
         return array;
@@ -123,6 +146,7 @@ var quickSort = function quickSort(array) {
     return quickSort(left).concat([pivot], quickSort(right));
 };
 
+//归并排序
 var mergeSort = function mergeSort(array) {
     if (array.length === 1) {
         return array;
@@ -183,6 +207,27 @@ btnInitArray.onclick = function () {
     initArray();
 };
 
+btnSelectionSort.onclick = function () {
+    var array = arr.slice();
+    var result = quickSort(array);
+    displaySortArray(result, sortResult, '选择排序');
+    // markdown(`
+    // let selectionSort = (array) => {
+    //     for (let i = 0; i < arr.length; i++) {
+    //         let minIndex = i;
+    //         for (let j = i + 1; j < arr.length; j++) {
+    //             if (array[j] < array[minIndex]) {
+    //                 minIndex = j;
+    //             }
+    //         }
+    //         if (minIndex !== i) {
+    //             swap(array, i, minIndex);
+    //         }
+    //     }
+    //     return array;
+    // }`);
+};
+
 btnQuickSort.onclick = function () {
     var array = arr.slice();
     var result = quickSort(array);
@@ -194,6 +239,16 @@ btnMergeSort.onclick = function () {
     var result = mergeSort(array);
     displaySortArray(result, sortResult, '归并排序');
 };
+
+function markdown(text) {
+    //创建实例
+    var converter = new showdown.Converter();
+    //进行转换
+    var html = converter.makeHtml(text);
+    console.log(html);
+    //展示到对应的地方  result便是id名称
+    code.innerHTML = html;
+}
 },{}],"../../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -223,7 +278,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '50015' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '50616' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

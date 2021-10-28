@@ -1,3 +1,26 @@
+//选择排序
+let selectionSort = (array) => {
+    for (let i = 0; i < arr.length; i++) {
+        let minIndex = i;
+        for (let j = i + 1; j < arr.length; j++) {
+            if (array[j] < array[minIndex]) {
+                minIndex = j;
+            }
+        }
+        if (minIndex !== i) {
+            swap(array, i, minIndex);
+        }
+    }
+    return array;
+}
+
+let swap = (array, indexA, indexB) => {
+    let temp = array[indexA];
+    array[indexA] = array[indexB];
+    array[indexB] = temp;
+}
+
+//快速排序
 let quickSort = (array) => {
     if (array.length <= 1) {
         return array;
@@ -17,6 +40,7 @@ let quickSort = (array) => {
     return quickSort(left).concat([pivot], quickSort(right));
 }
 
+//归并排序
 let mergeSort = (array) => {
     if (array.length === 1) {
         return array;
@@ -77,6 +101,27 @@ btnInitArray.onclick = () => {
     initArray();
 }
 
+btnSelectionSort.onclick = () => {
+    const array = arr.slice();
+    let result = quickSort(array);
+    displaySortArray(result, sortResult, '选择排序');
+    // markdown(`
+    // let selectionSort = (array) => {
+    //     for (let i = 0; i < arr.length; i++) {
+    //         let minIndex = i;
+    //         for (let j = i + 1; j < arr.length; j++) {
+    //             if (array[j] < array[minIndex]) {
+    //                 minIndex = j;
+    //             }
+    //         }
+    //         if (minIndex !== i) {
+    //             swap(array, i, minIndex);
+    //         }
+    //     }
+    //     return array;
+    // }`);
+}
+
 btnQuickSort.onclick = () => {
     const array = arr.slice();
     let result = quickSort(array);
@@ -87,4 +132,14 @@ btnMergeSort.onclick = () => {
     const array = arr.slice();
     let result = mergeSort(array);
     displaySortArray(result, sortResult, '归并排序');
+}
+
+function markdown(text) {
+    //创建实例
+    var converter = new showdown.Converter();
+    //进行转换
+    var html = converter.makeHtml(text);
+    console.log(html);
+    //展示到对应的地方  result便是id名称
+    code.innerHTML = html;
 }
