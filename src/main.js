@@ -18,7 +18,26 @@ let quickSort = (array) => {
 }
 
 let mergeSort = (array) => {
-    return array;
+    if (array.length === 1) {
+        return array;
+    }
+    let arr1 = array.slice(0, Math.floor(array.length / 2));
+    let arr2 = array.slice(Math.floor(array.length / 2));
+    return merge(mergeSort(arr1), mergeSort(arr2));
+}
+
+let merge = (arr1, arr2) => {
+    if (!arr1.length) {
+        return arr2;
+    }
+    if (!arr2.length) {
+        return arr1;
+    }
+    if (arr1[0] < arr2[0]) {
+        return [arr1[0]].concat(merge(arr1.slice(1), arr2));
+    } else {
+        return [arr2[0]].concat(merge(arr1, arr2.slice(1)))
+    }
 }
 
 let displaySortArray = (array, div, message) => {
@@ -49,6 +68,7 @@ let arr;
 let initArray = () => {
     arr = generateArray(10, 1000);
     displaySortArray(arr, arrayDiv, '初始数组');
+    sortResult.innerHTML = '';
 }
 
 initArray();
