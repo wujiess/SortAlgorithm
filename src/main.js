@@ -1,8 +1,8 @@
 //选择排序
 let selectionSort = (array) => {
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         let minIndex = i;
-        for (let j = i + 1; j < arr.length; j++) {
+        for (let j = i + 1; j < array.length; j++) {
             if (array[j] < array[minIndex]) {
                 minIndex = j;
             }
@@ -42,7 +42,7 @@ let quickSort = (array) => {
 
 //归并排序
 let mergeSort = (array) => {
-    if (array.length === 1) {
+    if (array.length <= 1) {
         return array;
     }
     let arr1 = array.slice(0, Math.floor(array.length / 2));
@@ -103,13 +103,13 @@ btnInitArray.onclick = () => {
 
 btnSelectionSort.onclick = () => {
     const array = arr.slice();
-    let result = quickSort(array);
+    let result = selectionSort(array);
     displaySortArray(result, sortResult, '选择排序');
     code.innerHTML = `
     let selectionSort = (array) => {
-        for (let i = 0; i < arr.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             let minIndex = i;
-            for (let j = i + 1; j < arr.length; j++) {
+            for (let j = i + 1; j < array.length; j++) {
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
                 }
@@ -166,7 +166,7 @@ btnMergeSort.onclick = () => {
     displaySortArray(result, sortResult, '归并排序');
     code.innerHTML = `
     let mergeSort = (array) => {
-        if (array.length === 1) {
+        if (array.length <= 1) {
             return array;
         }
         let arr1 = array.slice(0, Math.floor(array.length / 2));
