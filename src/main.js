@@ -105,41 +105,89 @@ btnSelectionSort.onclick = () => {
     const array = arr.slice();
     let result = quickSort(array);
     displaySortArray(result, sortResult, '选择排序');
-    // markdown(`
-    // let selectionSort = (array) => {
-    //     for (let i = 0; i < arr.length; i++) {
-    //         let minIndex = i;
-    //         for (let j = i + 1; j < arr.length; j++) {
-    //             if (array[j] < array[minIndex]) {
-    //                 minIndex = j;
-    //             }
-    //         }
-    //         if (minIndex !== i) {
-    //             swap(array, i, minIndex);
-    //         }
-    //     }
-    //     return array;
-    // }`);
+    code.innerHTML = `
+    let selectionSort = (array) => {
+        for (let i = 0; i < arr.length; i++) {
+            let minIndex = i;
+            for (let j = i + 1; j < arr.length; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            if (minIndex !== i) {
+                swap(array, i, minIndex);
+            }
+        }
+        return array;
+    }
+    
+
+    let swap = (array, indexA, indexB) => {
+        let temp = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = temp;
+    }`;
+    hljs.highlightAll({
+        languages: 'javascript'
+    });
 }
 
 btnQuickSort.onclick = () => {
     const array = arr.slice();
     let result = quickSort(array);
     displaySortArray(result, sortResult, '快速排序');
+    code.innerHTML = `
+    let quickSort = (array) => {
+        if (array.length <= 1) {
+            return array;
+        }
+        const pivotIndex = Math.floor(array.length / 2);
+        var pivot = array.splice(pivotIndex, 1)[0];
+    
+        const left = [];
+        const right = [];
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] < pivot) {
+                left.push(array[i])
+            } else {
+                right.push(array[i]);
+            }
+        }
+        return quickSort(left).concat([pivot], quickSort(right));
+    }`;
+    hljs.highlightAll({
+        languages: 'javascript'
+    });
 }
 
 btnMergeSort.onclick = () => {
     const array = arr.slice();
     let result = mergeSort(array);
     displaySortArray(result, sortResult, '归并排序');
-}
-
-function markdown(text) {
-    //创建实例
-    var converter = new showdown.Converter();
-    //进行转换
-    var html = converter.makeHtml(text);
-    console.log(html);
-    //展示到对应的地方  result便是id名称
-    code.innerHTML = html;
+    code.innerHTML = `
+    let mergeSort = (array) => {
+        if (array.length === 1) {
+            return array;
+        }
+        let arr1 = array.slice(0, Math.floor(array.length / 2));
+        let arr2 = array.slice(Math.floor(array.length / 2));
+        return merge(mergeSort(arr1), mergeSort(arr2));
+    }
+    
+    let merge = (arr1, arr2) => {
+        if (!arr1.length) {
+            return arr2;
+        }
+        if (!arr2.length) {
+            return arr1;
+        }
+        if (arr1[0] < arr2[0]) {
+            return [arr1[0]].concat(merge(arr1.slice(1), arr2));
+        } else {
+            return [arr2[0]].concat(merge(arr1, arr2.slice(1)))
+        }
+    }`;
+    hljs.highlightAll({
+        languages: 'javascript'
+    });
 }

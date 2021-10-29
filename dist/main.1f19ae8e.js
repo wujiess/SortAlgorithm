@@ -118,6 +118,32 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+//选择排序
+var selectionSort = function selectionSort(array) {
+  for (var i = 0; i < arr.length; i++) {
+    var minIndex = i;
+
+    for (var j = i + 1; j < arr.length; j++) {
+      if (array[j] < array[minIndex]) {
+        minIndex = j;
+      }
+    }
+
+    if (minIndex !== i) {
+      swap(array, i, minIndex);
+    }
+  }
+
+  return array;
+};
+
+var swap = function swap(array, indexA, indexB) {
+  var temp = array[indexA];
+  array[indexA] = array[indexB];
+  array[indexB] = temp;
+}; //快速排序
+
+
 var quickSort = function quickSort(array) {
   if (array.length <= 1) {
     return array;
@@ -137,10 +163,33 @@ var quickSort = function quickSort(array) {
   }
 
   return quickSort(left).concat([pivot], quickSort(right));
-};
+}; //归并排序
+
 
 var mergeSort = function mergeSort(array) {
-  return array;
+  if (array.length === 1) {
+    return array;
+  }
+
+  var arr1 = array.slice(0, Math.floor(array.length / 2));
+  var arr2 = array.slice(Math.floor(array.length / 2));
+  return merge(mergeSort(arr1), mergeSort(arr2));
+};
+
+var merge = function merge(arr1, arr2) {
+  if (!arr1.length) {
+    return arr2;
+  }
+
+  if (!arr2.length) {
+    return arr1;
+  }
+
+  if (arr1[0] < arr2[0]) {
+    return [arr1[0]].concat(merge(arr1.slice(1), arr2));
+  } else {
+    return [arr2[0]].concat(merge(arr1, arr2.slice(1)));
+  }
 };
 
 var displaySortArray = function displaySortArray(array, div, message) {
@@ -175,6 +224,7 @@ var arr;
 var initArray = function initArray() {
   arr = generateArray(10, 1000);
   displaySortArray(arr, arrayDiv, '初始数组');
+  sortResult.innerHTML = '';
 };
 
 initArray();
@@ -183,16 +233,34 @@ btnInitArray.onclick = function () {
   initArray();
 };
 
+btnSelectionSort.onclick = function () {
+  var array = arr.slice();
+  var result = quickSort(array);
+  displaySortArray(result, sortResult, '选择排序');
+  code.innerHTML = "\n    let selectionSort = (array) => {\n        for (let i = 0; i < arr.length; i++) {\n            let minIndex = i;\n            for (let j = i + 1; j < arr.length; j++) {\n                if (array[j] < array[minIndex]) {\n                    minIndex = j;\n                }\n            }\n            if (minIndex !== i) {\n                swap(array, i, minIndex);\n            }\n        }\n        return array;\n    }\n    \n\n    let swap = (array, indexA, indexB) => {\n        let temp = array[indexA];\n        array[indexA] = array[indexB];\n        array[indexB] = temp;\n    }";
+  hljs.highlightAll({
+    languages: 'javascript'
+  });
+};
+
 btnQuickSort.onclick = function () {
   var array = arr.slice();
   var result = quickSort(array);
   displaySortArray(result, sortResult, '快速排序');
+  code.innerHTML = "\n    let quickSort = (array) => {\n        if (array.length <= 1) {\n            return array;\n        }\n        const pivotIndex = Math.floor(array.length / 2);\n        var pivot = array.splice(pivotIndex, 1)[0];\n    \n        const left = [];\n        const right = [];\n        for (let i = 0; i < array.length; i++) {\n            if (array[i] < pivot) {\n                left.push(array[i])\n            } else {\n                right.push(array[i]);\n            }\n        }\n        return quickSort(left).concat([pivot], quickSort(right));\n    }";
+  hljs.highlightAll({
+    languages: 'javascript'
+  });
 };
 
 btnMergeSort.onclick = function () {
   var array = arr.slice();
   var result = mergeSort(array);
   displaySortArray(result, sortResult, '归并排序');
+  code.innerHTML = "\n    let mergeSort = (array) => {\n        if (array.length === 1) {\n            return array;\n        }\n        let arr1 = array.slice(0, Math.floor(array.length / 2));\n        let arr2 = array.slice(Math.floor(array.length / 2));\n        return merge(mergeSort(arr1), mergeSort(arr2));\n    }\n    \n    let merge = (arr1, arr2) => {\n        if (!arr1.length) {\n            return arr2;\n        }\n        if (!arr2.length) {\n            return arr1;\n        }\n        if (arr1[0] < arr2[0]) {\n            return [arr1[0]].concat(merge(arr1.slice(1), arr2));\n        } else {\n            return [arr2[0]].concat(merge(arr1, arr2.slice(1)))\n        }\n    }";
+  hljs.highlightAll({
+    languages: 'javascript'
+  });
 };
 },{}],"C:/Users/yanming/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -222,7 +290,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49574" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60149" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
