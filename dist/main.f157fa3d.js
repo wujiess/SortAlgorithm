@@ -120,10 +120,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"epB2":[function(require,module,exports) {
 //选择排序
 var selectionSort = function selectionSort(array) {
-  for (var i = 0; i < arr.length; i++) {
+  for (var i = 0; i < array.length; i++) {
     var minIndex = i;
 
-    for (var j = i + 1; j < arr.length; j++) {
+    for (var j = i + 1; j < array.length; j++) {
       if (array[j] < array[minIndex]) {
         minIndex = j;
       }
@@ -167,7 +167,7 @@ var quickSort = function quickSort(array) {
 
 
 var mergeSort = function mergeSort(array) {
-  if (array.length === 1) {
+  if (array.length <= 1) {
     return array;
   }
 
@@ -235,9 +235,9 @@ btnInitArray.onclick = function () {
 
 btnSelectionSort.onclick = function () {
   var array = arr.slice();
-  var result = quickSort(array);
+  var result = selectionSort(array);
   displaySortArray(result, sortResult, '选择排序');
-  code.innerHTML = "\n    let selectionSort = (array) => {\n        for (let i = 0; i < arr.length; i++) {\n            let minIndex = i;\n            for (let j = i + 1; j < arr.length; j++) {\n                if (array[j] < array[minIndex]) {\n                    minIndex = j;\n                }\n            }\n            if (minIndex !== i) {\n                swap(array, i, minIndex);\n            }\n        }\n        return array;\n    }\n    \n\n    let swap = (array, indexA, indexB) => {\n        let temp = array[indexA];\n        array[indexA] = array[indexB];\n        array[indexB] = temp;\n    }";
+  code.innerHTML = "\n    let selectionSort = (array) => {\n        for (let i = 0; i < array.length; i++) {\n            let minIndex = i;\n            for (let j = i + 1; j < array.length; j++) {\n                if (array[j] < array[minIndex]) {\n                    minIndex = j;\n                }\n            }\n            if (minIndex !== i) {\n                swap(array, i, minIndex);\n            }\n        }\n        return array;\n    }\n    \n\n    let swap = (array, indexA, indexB) => {\n        let temp = array[indexA];\n        array[indexA] = array[indexB];\n        array[indexB] = temp;\n    }";
   hljs.highlightAll({
     languages: 'javascript'
   });
@@ -257,10 +257,10 @@ btnMergeSort.onclick = function () {
   var array = arr.slice();
   var result = mergeSort(array);
   displaySortArray(result, sortResult, '归并排序');
-  code.innerHTML = "\n    let mergeSort = (array) => {\n        if (array.length === 1) {\n            return array;\n        }\n        let arr1 = array.slice(0, Math.floor(array.length / 2));\n        let arr2 = array.slice(Math.floor(array.length / 2));\n        return merge(mergeSort(arr1), mergeSort(arr2));\n    }\n    \n    let merge = (arr1, arr2) => {\n        if (!arr1.length) {\n            return arr2;\n        }\n        if (!arr2.length) {\n            return arr1;\n        }\n        if (arr1[0] < arr2[0]) {\n            return [arr1[0]].concat(merge(arr1.slice(1), arr2));\n        } else {\n            return [arr2[0]].concat(merge(arr1, arr2.slice(1)))\n        }\n    }";
+  code.innerHTML = "\n    let mergeSort = (array) => {\n        if (array.length <= 1) {\n            return array;\n        }\n        let arr1 = array.slice(0, Math.floor(array.length / 2));\n        let arr2 = array.slice(Math.floor(array.length / 2));\n        return merge(mergeSort(arr1), mergeSort(arr2));\n    }\n    \n    let merge = (arr1, arr2) => {\n        if (!arr1.length) {\n            return arr2;\n        }\n        if (!arr2.length) {\n            return arr1;\n        }\n        if (arr1[0] < arr2[0]) {\n            return [arr1[0]].concat(merge(arr1.slice(1), arr2));\n        } else {\n            return [arr2[0]].concat(merge(arr1, arr2.slice(1)))\n        }\n    }";
   hljs.highlightAll({
     languages: 'javascript'
   });
 };
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.7f81ccc7.js.map
+//# sourceMappingURL=main.f157fa3d.js.map
